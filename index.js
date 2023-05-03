@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
-const notifier = require('node-notifier');
 
 const app = express();
 app.use(bodyParser.json({ extended: true }));
@@ -115,15 +114,6 @@ app.post("/add-order", (req, res) => {
     const data = req.body;
     Order.find().then(obj => {
         data.orderId = obj.length;
-        Order.insertMany(data);
-        notifier.notify(
-            {
-                title: "New Order",
-                message: data.name + " has just ordered " + data.quantity + " " + data.product + "(s)",
-                icon: './cart.jpg',
-                sound: true
-            }
-        )
         console.log("Received Order!");
     });
 });
