@@ -4,9 +4,10 @@ const mongoose = require('mongoose')
 
 const app = express();
 app.use(bodyParser.json({ extended: true }));
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
+const ADDR = process.env.DB_ADDR;
 
-mongoose.connect("mongodb+srv://isaac:1021mki@storedb.pa5ijsd.mongodb.net/storeDB?retryWrites=true&w=majority")
+mongoose.connect(ADDR)
 .then(() => {
     app.listen(PORT, () => {
         console.log("Connected to DB & Listening on port " + PORT + "...");
