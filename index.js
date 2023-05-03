@@ -107,6 +107,7 @@ app.get("/products", (req, res) => {
 app.get("/orders", (req, res) => {
     Order.find().then(data => {
         res.send(convertOrdersDB(data));
+        console.log("Sent Orders");
     })
 });
 
@@ -114,13 +115,15 @@ app.post("/add-order", (req, res) => {
     const data = req.body;
     Order.find().then(obj => {
         data.orderId = obj.length;
-        console.log("Received Order!");
+        Order.insertMany(data);
+        console.log("Added Order!");
     });
 });
 
 app.post('/rm-order', (req, res) => {
     Order.deleteOne({ orderId: req.body.theId }).then(() => {
     });
+    console.log("Order Removed");
 });
 
 app.post('/admin-login', (req, res) => {
@@ -139,5 +142,7 @@ app.post('/admin-login', (req, res) => {
         else if (count === 0){
             res.send("BAD");
         }
+
+        console.log("Admin Requested");
     });
 });
