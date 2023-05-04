@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const fs = require('node:fs');
 
 const app = express();
 app.use(bodyParser.json({ extended: true }));
@@ -8,18 +9,18 @@ app.use(bodyParser.json({ extended: true }));
 //const PORT = process.env.PORT;
 //const ADDR = process.env.DB_ADDR;
 
-const port = 5000;
-addr = "mongodb+srv://isaac:1021mki@storedb.pa5ijsd.mongodb.net/storeDB?retryWrites=true&w=majority"
-
-mongoose.connect(addr)
-.then(() => {
-    app.listen(port, () => {
+fs.readFile(__dirname + "/data.txt", 'utf8', (err, addr) => {
+    const port = 5000;
+    mongoose.connect(addr)
+    .then(() => {
+        app.listen(port, () => {
         console.log("Connected to DB & Listening on port " + port + "...");
     });
-})
-.catch((error) => {
-    console.log(error)
-})
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+});
 
 const productSchema = new mongoose.Schema({
     name: String,
