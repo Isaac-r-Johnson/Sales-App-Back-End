@@ -4,13 +4,17 @@ const mongoose = require('mongoose')
 
 const app = express();
 app.use(bodyParser.json({ extended: true }));
-const PORT = process.env.PORT;
-const ADDR = process.env.DB_ADDR;
 
-mongoose.connect(ADDR)
+//const PORT = process.env.PORT;
+//const ADDR = process.env.DB_ADDR;
+
+const port = 5000;
+addr = "mongodb+srv://isaac:1021mki@storedb.pa5ijsd.mongodb.net/storeDB?retryWrites=true&w=majority"
+
+mongoose.connect(addr)
 .then(() => {
-    app.listen(PORT, () => {
-        console.log("Connected to DB & Listening on port " + PORT + "...");
+    app.listen(port, () => {
+        console.log("Connected to DB & Listening on port " + port + "...");
     });
 })
 .catch((error) => {
